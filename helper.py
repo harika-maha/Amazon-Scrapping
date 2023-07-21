@@ -10,7 +10,6 @@ import time
 import os
 
 
-load_dotenv()
 
 PATH=os.environ.get('PATH')
 
