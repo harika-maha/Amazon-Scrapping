@@ -44,9 +44,9 @@ def flipkart(searchData):
 
     soup = bs(page.content, "html.parser")
 
-    price = soup.find("div", {"class":"_30jeq3 _16Jk6d"}).text
+    flipkartprice = soup.find("div", {"class":"_30jeq3 _16Jk6d"}).text
 
-    print(price)
+    print(flipkartprice)
 
 # flipkart("macbook")
 
