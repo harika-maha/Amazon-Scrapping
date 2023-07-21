@@ -47,6 +47,7 @@ def flipkart(searchData):
     flipkartprice = soup.find("div", {"class":"_30jeq3 _16Jk6d"}).text
 
     print(flipkartprice)
+    return flipkartprice
 
 # flipkart("macbook")
 
