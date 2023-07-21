@@ -7,13 +7,19 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import time
+import os
+
+
+load_dotenv()
+
+PATH=os.environ.get('PATH')
 
 def flipkart(searchData):
     # path = "/usr/local/bin/chromedriver.exe"
     options =Options()
     options.add_argument("--headless")
     options.add_argument("incognito")
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
 
     driver.get("https://www.flipkart.com/")
 
