@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup as bs
 import requests as r
-import regex as re
+# import regex as re
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -54,17 +54,18 @@ def flipkart(searchData):
 def ebay(searchData):
     options =Options()
 
-    # options.add_argument("incognito")
-    options = webdriver.ChromeOptions()
+    options.add_argument("incognito")
+    options.add_argument("--headless")
+    # options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver=webdriver.Chrome(options=options)
+    driver=webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
     driver.get("https://www.ebay.com/")
 
     time.sleep(5)
 
     search=driver.find_element(By.XPATH,'//input[@CLASS="gh-tb ui-autocomplete-input"]')
     time.sleep(5)
-    search.send_keys("macbook")
+    search.send_keys(searchData)
     time.sleep(5)
     searchbtn=driver.find_element(By.XPATH,'//*[@id="gh-btn"]').click()
     print ("Search button clicked.")
@@ -90,6 +91,6 @@ def ebay(searchData):
 
     # divArray[5]
 
-    print(divArray[4][:4])
+    return(divArray[4][:4])
 
-ebay("macbook")
+# ebay("macbook")

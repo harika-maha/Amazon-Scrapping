@@ -41,7 +41,17 @@ def result():
 
         x= new_collection.insert_one(result)
         # amazon(searchData)
-        ebay(searchData)
+        ebayprice=ebay(searchData)
+        query = {"productName":searchData}
+        new_field_name = "ebayPrice"
+        new_field_value = ebayprice
+
+        # The update operation using $set to add a new field to the document
+        update_query = {"$set": {new_field_name: new_field_value}}
+
+        # Use update_one to update a single document that matches the query condition
+        new_collection.update_one(query, update_query)
+        print("done")
 
 
         return render_template('index.html')
