@@ -45,11 +45,11 @@ def flipkart(searchData):
     soup = bs(page.content, "html.parser")
 
     flipkartprice = soup.find("div", {"class":"_30jeq3 _16Jk6d"}).text
+    flipkartprice=flipkartprice.replace(",","")
 
-    print(flipkartprice)
-    return flipkartprice
+    return flipkartprice[1:]
 
-# flipkart("macbook")
+
 
 def ebay(searchData):
     options =Options()
@@ -89,8 +89,7 @@ def ebay(searchData):
     divStr = str(divTag)
     divArray = divStr.split()
 
-    # divArray[5]
+    # print(divArray[5])
+    val=divArray[4][:4]
 
-    return(divArray[4][:4])
-
-# ebay("macbook")
+    return(val[1:])

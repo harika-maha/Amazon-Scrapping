@@ -27,6 +27,7 @@ new_collection = database[collection_name]
 
 options =Options()
 options.add_argument("incognito")
+options.add_argument("--headless")
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 driver=webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
 driver.get("https://www.flipkart.com/")
@@ -52,8 +53,9 @@ page = r.get(url)
 soup = bs(page.content, "html.parser")
 
 price = soup.find("div", {"class":"_30jeq3 _16Jk6d"}).text
+price=price.replace(",","")
 
-print(price)
+print(price[1:])
 
 
 
