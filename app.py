@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template
 from helper import flipkart
+from helper import ebay
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -12,6 +13,7 @@ def result():
         searchData = request.form["search"]
         print(searchData)
         flipkart(searchData)
+        ebay(searchData)
         return render_template('index.html')
     # return(searchData)
 

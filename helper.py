@@ -89,6 +89,4 @@ def ebay(searchData):
 
     # divArray[5]
 
-    print(divArray[4][:4])
-
-ebay("macbook")
+    print(divArray[4][:4]*86)
