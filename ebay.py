@@ -4,6 +4,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
 import time
+from bs4 import BeautifulSoup as bs
+import requests as r
 
 options =Options()
 
@@ -33,6 +35,27 @@ time.sleep(15)
 # productlink=firstelement.get_attribute('href')
 # time.sleep(5)
 # print("hey"+productlink)
+
+url = firstelementurl
+
+page = r.get(url)
+
+soup = bs(page.content, "html.parser")
+
+divTag = soup.find("div", {"class":"x-price-primary"})
+# price = soup.find('span', {"class":"ux-textspans"})
+# price = re.findall("$", divTag)
+
+
+# price = [soup.find('span', {"class":"ux-textspans"}) for div in soup.find('div', {"class":"x-price-primary"})]
+
+divStr = str(divTag)
+divArray = divStr.split()
+print(divArray)
+
+val=divArray[4][:4]
+print(val[1:])
+
 
 
 
