@@ -18,7 +18,7 @@ def flipkart(result_queue,searchData):
     options =Options()
     options.add_argument("--headless")
     options.add_argument("incognito")
-    driver = webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
+    driver = webdriver.Chrome(options=options)
 
     driver.get("https://www.flipkart.com/")
 
@@ -62,7 +62,7 @@ def ebay(result_queue,searchData):
     options.add_argument("--headless")
     # options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver=webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
+    driver=webdriver.Chrome(options=options)
     driver.get("https://www.ebay.com/")
 
     time.sleep(3)
