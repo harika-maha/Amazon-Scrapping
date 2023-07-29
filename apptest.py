@@ -1,17 +1,43 @@
+# a test for multiprocessing
+
 from bs4 import BeautifulSoup as bs
 import requests as r
 # import regex as re
-
+import multiprocessing
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import time
 import os
+from flask import Flask, request, render_template
+# from helper import flipkart
+# from helper import ebay
+import os
+from dotenv import load_dotenv
+from pymongo import MongoClient
+
+app = Flask(__name__)
+
+load_dotenv()
+
+
+PORT            = os.environ.get('PORT')
+MONGO_URI       = os.environ.get('MONGO_URI')
+DB_NAME         = os.environ.get('DB_NAME')
+
+
+# creating a MongoClient object
+client = MongoClient(MONGO_URI)
+
+# accessing the database
+database = client[DB_NAME]
+collection_name = 'productPrice'
+new_collection = database[collection_name]
 
 
 
-PATH=os.environ.get('PATH')
+# PATH=os.environ.get('PATH')
 
 def flipkart(result_queue,searchData):
     # path = "/usr/local/bin/chromedriver.exe"
@@ -48,11 +74,8 @@ def flipkart(result_queue,searchData):
     flipkartprice=flipkartprice.replace(",","")
     flipkarttitle = soup.find("span", {"class":"B_NuCI"}).text
 
-    result_queue.put((flipkartprice[1:],url,flipkarttitle))
-
-
     # return {'fprice':flipkartprice[1:], 'furl': url, 'ftitle': flipkarttitle}
-
+    result_queue.put((flipkartprice[1:]))
 
 
 def ebay(result_queue,searchData):
@@ -101,6 +124,77 @@ def ebay(result_queue,searchData):
     val=divArray[4][:4]
 
     # print(divArray[4][:4]*86)
-    result_queue.put((val[1:],url,ebaytitle))
     # return{'eprice':val[1:], 'eurl':url, 'etitle':ebaytitle}
+    result_queue.put((val[1:]))
 
+
+
+
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    return render_template('index.html')
+
+@app.route('/index', methods=['GET', 'POST'])
+def result():
+    if request.method=="POST":
+        searchData = request.form["search"]
+        print(searchData)
+        result_queue=multiprocessing.Queue()
+        processA=multiprocessing.Process(target=flipkart,args=(result_queue,searchData))
+        processB=multiprocessing.Process(target=ebay,args=(result_queue,searchData))
+
+        processA.start()
+        processB.start()
+
+        processA.join()
+        processB.join()
+
+        results=[]
+        while not result_queue.empty():
+            results.append(result_queue.get())
+        print(results)
+
+        return render_template('index.html')
+
+
+
+
+
+
+
+        # flip=flipkart(searchData)
+        # flipkartprice = flip['fprice']
+        # flipkarturl = flip['furl']
+        # flipkarttitle = flip['ftitle']
+        # eb = ebay(searchData)
+        # ebayprice = (float(eb['eprice'])*86)
+        # ebayurl = eb['eurl']
+        # ebaytitle = eb['etitle']
+        # print(flipkartprice)
+        # print(ebayprice)
+
+        # result={
+        #     "productName":searchData,
+        #     "flipkartPrice": flipkartprice
+        # }
+
+        # x= new_collection.insert_one(result)
+        # # amazon(searchData)
+        # # ebayprice=ebay(searchData)
+        # query = {"productName":searchData}
+        # new_field_name = "ebayPrice"
+        # new_field_value = ebayprice
+
+        # # The update operation using $set to add a new field to the document
+        # update_query = {"$set": {new_field_name: new_field_value}}
+
+        # # Use update_one to update a single document that matches the query condition
+        # new_collection.update_one(query, update_query)
+        # print("done")
+
+
+
+    # return(searchData)
+
+if __name__ =='__main__':
+    app.run(debug = True)
