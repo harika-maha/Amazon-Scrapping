@@ -29,7 +29,7 @@ options =Options()
 options.add_argument("incognito")
 options.add_argument("--headless")
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
-driver=webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
+driver=webdriver.Chrome(options=options)
 driver.get("https://www.flipkart.com/")
 driver.implicitly_wait(15)
 

@@ -18,14 +18,14 @@ def flipkart(searchData):
     options =Options()
     options.add_argument("--headless")
     options.add_argument("incognito")
-    driver = webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
+    driver = webdriver.Chrome(options=options)
 
     driver.get("https://www.flipkart.com/")
 
-    time.sleep(6)
+    time.sleep(5)
 
     search=driver.find_element(By.XPATH,'//*[@id="container"]/div/div[1]/div[1]/div[2]/div[2]/form/div/div/input')
-    time.sleep(8)
+    time.sleep(5)
     search.send_keys(searchData)
     searchbutton=driver.find_element(By.XPATH,'//*[@id="container"]/div/div[1]/div[1]/div[2]/div[2]/form/div/button')
     time.sleep(5)
@@ -33,8 +33,8 @@ def flipkart(searchData):
     time.sleep(5)
     firstelement=driver.find_element(By.XPATH,'//*[@id="container"]/div/div[3]/div[1]/div[2]/div[2]/div/div/div/a')
     productlink=firstelement.get_attribute('href')
-    time.sleep(5)
-    # print("hey  ---- "+productlink)
+    time.sleep(3)
+    print("hey  ---- "+productlink)
 
 
 
@@ -47,7 +47,7 @@ def flipkart(searchData):
     flipkartprice = soup.find("div", {"class":"_30jeq3 _16Jk6d"}).text
     flipkartprice=flipkartprice.replace(",","")
 
-    return flipkartprice[1:]
+    return {'fprice':flipkartprice[1:], 'furl': url}
 
 
 
@@ -58,10 +58,10 @@ def ebay(searchData):
     options.add_argument("--headless")
     # options = webdriver.ChromeOptions()
     options.add_experimental_option('excludeSwitches', ['enable-logging'])
-    driver=webdriver.Chrome('C:\\Users\\vaishali\\Downloads\\chromedriver_win32\\chromedriver.exe',options=options)
+    driver=webdriver.Chrome(options=options)
     driver.get("https://www.ebay.com/")
 
-    time.sleep(5)
+    time.sleep(3)
 
     search=driver.find_element(By.XPATH,'//input[@CLASS="gh-tb ui-autocomplete-input"]')
     time.sleep(5)
@@ -69,9 +69,12 @@ def ebay(searchData):
     time.sleep(5)
     searchbtn=driver.find_element(By.XPATH,'//*[@id="gh-btn"]').click()
     print ("Search button clicked.")
-    firstelementurl=driver.find_element(By.XPATH,'//*[@id="item2b45ac98b6"]/div/div[2]/a').get_attribute('href')
+    time.sleep(5)
+    # firstelementurl=driver.find_element(By.XPATH,'//*[@id="item2b45ac98b6"]/div/div[2]/a').get_attribute('href')
+    firstelementurl=driver.find_elements(By.XPATH,'//a[@class="s-item__link"]')[1].get_attribute('href')
+    # //*[@id="item5993e959d1"]/div/div[2]/a
     print(firstelementurl)
-    time.sleep(15)
+    time.sleep(3)
 
     url = firstelementurl
 
@@ -92,5 +95,5 @@ def ebay(searchData):
     # print(divArray[5])
     val=divArray[4][:4]
 
-    print(divArray[4][:4]*86)
-    return(val[1:])
+    # print(divArray[4][:4]*86)
+    return{'eprice':val[1:], 'eurl':url}

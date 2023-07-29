@@ -32,8 +32,14 @@ def result():
     if request.method=="POST":
         searchData = request.form["search"]
         print(searchData)
-        flipkartprice=flipkart(searchData)
-        ebay(searchData)
+        flip=flipkart(searchData)
+        flipkartprice = flip['fprice']
+        flipkarturl = flip['furl']
+        eb = ebay(searchData)
+        ebayprice = (float(eb['eprice'])*86)
+        ebayurl = eb['eurl']
+        print(flipkartprice)
+        print(ebayprice)
 
         result={
             "productName":searchData,
@@ -42,7 +48,7 @@ def result():
 
         x= new_collection.insert_one(result)
         # amazon(searchData)
-        ebayprice=ebay(searchData)
+        # ebayprice=ebay(searchData)
         query = {"productName":searchData}
         new_field_name = "ebayPrice"
         new_field_value = ebayprice
@@ -55,9 +61,8 @@ def result():
         print("done")
 
 
-        return render_template('index.html')
+        return render_template('comparison.html', flipkartprice=flipkartprice, ebayprice=ebayprice, flipkarturl=flipkarturl, ebayurl=ebayurl)
     # return(searchData)
-
 
 if __name__ =='__main__':
     app.run(debug = True)
