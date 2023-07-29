@@ -128,6 +128,9 @@
     padding: 30px;
     color: rgb(252, 250, 246);
   }
+  h2{
+    padding: 20px;
+  }
   body{
     background-image: linear-gradient(to right top, #051937, #141b32, #1c1d2d, #202028, #232323);
   }
@@ -147,8 +150,10 @@
 }
 
 .title {
-  color: grey;
+  color: rgb(183, 120, 3);
   font-size: 18px;
+  font-weight: bold;
+  padding-bottom: 2%;
 }
 
 button {
@@ -178,19 +183,21 @@ button:hover, a:hover {
 <body>
 
 <h1 style="text-align:center">Prices</h1>
+<h2 style="color: rgb(252, 250, 246);">Search result for: <span style="color: rgb(245, 160, 3); padding-left: 20px;">{{searchData}}</span></h2>
 
 <div class="container">
   <div class="card" style="width: 120%;">
     <img src="https://www.freepnglogos.com/uploads/flipkart-logo-png/flipkart-inventory-management-system-zap-inventory-1.png" alt="John" style="width:100%; height: 230px;">
-    <h2>Flipkart</h1>
+    <h2>Flipkart</h2>
+    <p class="title">{{flipkarttitle}}</p>
     <p class="title">{{flipkartprice}}</p>
-    
     <p><button onclick="location.href='{{flipkarturl}}'" type="button">Buy Now</button></p>
   </div>
 
   <div class="card">
     <img src="https://icon-library.com/images/ebay-logo-icon/ebay-logo-icon-7.jpg" alt="John" style="width: 100%; border-radius: 20px;">
-    <h2>Ebay</h1>
+    <h2>Ebay</h2>
+    <p class="title">{{ebaytitle}}</p>
     <p class="title">{{ebayprice}}</p>
     <p><button onclick="location.href='{{ebayurl}}'" type="button">Buy now</button></p>
   </div>

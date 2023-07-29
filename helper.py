@@ -46,8 +46,9 @@ def flipkart(searchData):
 
     flipkartprice = soup.find("div", {"class":"_30jeq3 _16Jk6d"}).text
     flipkartprice=flipkartprice.replace(",","")
+    flipkarttitle = soup.find("span", {"class":"B_NuCI"}).text
 
-    return {'fprice':flipkartprice[1:], 'furl': url}
+    return {'fprice':flipkartprice[1:], 'furl': url, 'ftitle': flipkarttitle}
 
 
 
@@ -85,15 +86,17 @@ def ebay(searchData):
     divTag = soup.find("div", {"class":"x-price-primary"})
     # price = soup.find('span', {"class":"ux-textspans"})
     # price = re.findall("$", divTag)
-
+    ebaytitle = soup.find("div",{"class":"vim x-item-title"}).find("span", {"class":"ux-textspans ux-textspans--BOLD"}).text
 
     # price = [soup.find('span', {"class":"ux-textspans"}) for div in soup.find('div', {"class":"x-price-primary"})]
 
     divStr = str(divTag)
     divArray = divStr.split()
+    print(ebaytitle)
 
     # print(divArray[5])
     val=divArray[4][:4]
 
     # print(divArray[4][:4]*86)
-    return{'eprice':val[1:], 'eurl':url}
+    return{'eprice':val[1:], 'eurl':url, 'etitle':ebaytitle}
+

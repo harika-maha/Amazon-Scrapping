@@ -35,9 +35,11 @@ def result():
         flip=flipkart(searchData)
         flipkartprice = flip['fprice']
         flipkarturl = flip['furl']
+        flipkarttitle = flip['ftitle']
         eb = ebay(searchData)
         ebayprice = (float(eb['eprice'])*86)
         ebayurl = eb['eurl']
+        ebaytitle = eb['etitle']
         print(flipkartprice)
         print(ebayprice)
 
@@ -61,7 +63,7 @@ def result():
         print("done")
 
 
-        return render_template('comparison.html', flipkartprice=flipkartprice, ebayprice=ebayprice, flipkarturl=flipkarturl, ebayurl=ebayurl)
+        return render_template('comparison.html', flipkartprice=flipkartprice, ebayprice=ebayprice, flipkarturl=flipkarturl, ebayurl=ebayurl, searchData=searchData, flipkarttitle=flipkarttitle, ebaytitle=ebaytitle)
     # return(searchData)
 
 if __name__ =='__main__':
